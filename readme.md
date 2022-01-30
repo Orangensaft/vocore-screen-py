@@ -12,7 +12,9 @@ For usage check the `example.py` - it should be pretty straightforward.
 ## Working features
 * Setting screen brightness
 * Sending images to the screen
-* Thus, setting arbitrary pixels to colors of choosing
+* Drawing horizontal/vertical lines
+* Drawing rects
+* Drawing text
 
 ## Not working (yet)
 * Getting touch events (Should be interrupt endpoint at 0x81 with a length of 128 bytes)
