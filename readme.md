@@ -1,6 +1,6 @@
 # Python wrapper for Vocore Screens
 
-This repo includes some python helper scripts to easily interface with the [VoCore Screen v2](https://vocore.io/screen.html) without the need of any additional drivers.
+This repo includes some python helper scripts to easily interface with the [VoCore Screen v2](https://vocore.io/screen.html).
 Internally PyUSB is used, which in turn uses libusb.
 
 For now this has only been tested with the 4" VoCore Screen v2 (with touch). This should also work with the 4.3" version.
