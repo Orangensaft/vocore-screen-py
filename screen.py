@@ -40,7 +40,7 @@ class VocoreScreen:
         :param color: RGB Value as string (#89ABCDEF) or int 0x89ABCDEF
         :param blit: If true, buffer will be flipped to the display
         """
-        self.buffer.set_pixel(x,y,color)
+        self.buffer.set_pixel(x, y, color)
         if blit:
             self.blit()
 
@@ -49,13 +49,13 @@ class VocoreScreen:
         Draws a line from x1,y1 to x2,y2
         """
         # todo: bresenham algo
-        sign = lambda x : -1 if x < 0 else 1 if x > 0 else 0
+        sign = lambda x: -1 if x < 0 else 1 if x > 0 else 0
         if x1 == x2 or y1 == y2:
             # horizontal or vertical line
             dx = sign(x2 - x1)
             dy = sign(y2 - y1)
             self.draw_pixel(x1, y1, color)
-            while (x1,y1) != (x2,y2):
+            while (x1, y1) != (x2, y2):
                 x1 += dx
                 y1 += dy
                 self.draw_pixel(x1, y1, color)
@@ -68,10 +68,19 @@ class VocoreScreen:
         """
         Draws rectangle from x1,y1 to x2,y2
         """
-        self.draw_line(x1,y1, x1, y2, color)
-        self.draw_line(x1,y1, x2, y1, color)
+        self.draw_line(x1, y1, x1, y2, color)
+        self.draw_line(x1, y1, x2, y1, color)
         self.draw_line(x2, y1, x2, y2, color)
         self.draw_line(x1, y2, x2, y2, color)
+        if blit:
+            self.blit()
+
+    def draw_string(self, x, y, s: str, color, blit=False, size=2):
+        """
+        Draws text on given position, where x and y are the lower left corner.
+        As a 5x7 font is used use size as scaling factor
+        """
+        self.buffer.draw_string(x, y, s, color, size)
         if blit:
             self.blit()
 

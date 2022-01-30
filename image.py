@@ -1,6 +1,9 @@
+from font import FONT_5x7
+
 HEIGHT = 480
 WIDTH = 800
 BUFFER_SIZE = WIDTH * HEIGHT * 2
+
 
 class Image:
     def __init__(self):
@@ -26,7 +29,22 @@ class Image:
         value = value.to_bytes(2, "little")
         address = self.get_pixel_addr(x, y)
         self.buffer[address] = value[0]
-        self.buffer[address+1] = value[1]
+        self.buffer[address + 1] = value[1]
+
+    def draw_char(self, x, y, c: str, color, scale=1):
+        # assuming font size 5x7
+        bits = FONT_5x7.get(c.upper(), FONT_5x7[-1])
+        for offset_y in range(7 * scale):
+            for offset_x in range(5 * scale):
+                bit_pos = (6 - (offset_y // scale)) * 5 + offset_x // scale
+                if bits[bit_pos] == "1":
+                    self.set_pixel(x + offset_x, y + offset_y, color)
+
+    def draw_string(self, x, y, s: str, color, size=1):
+        offset = 0
+        for i in s:
+            self.draw_char(x + offset, y, i, color, size)
+            offset += 6 * size
 
     @staticmethod
     def to_565(rgb888):
