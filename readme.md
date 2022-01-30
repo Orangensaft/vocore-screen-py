@@ -23,8 +23,8 @@ For usage check the `example.py` - it should be pretty straightforward.
 * Make sure your screen in plugged in
 * Make sure `libusb` is installed
 * If you want to use the scripts as non-root, make sure to add a rule to /etc/udev/rules.d/
-* You are good to go 🎉
 
 ### Windows
 * Download and install the **LibUSBk** driver from the [VoCore Homepage](https://vocore.io/screen.html)
-* That's it 😀
+
+Now run `example.py`. If everything worked, your screen should now show some test content.
