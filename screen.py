@@ -45,22 +45,40 @@ class VocoreScreen:
             self.blit()
 
     def draw_line(self, x1, y1, x2, y2, color, blit=False):
-        """
-        Draws a line from x1,y1 to x2,y2
-        """
-        # todo: bresenham algo
         sign = lambda x: -1 if x < 0 else 1 if x > 0 else 0
-        if x1 == x2 or y1 == y2:
-            # horizontal or vertical line
-            dx = sign(x2 - x1)
-            dy = sign(y2 - y1)
-            self.draw_pixel(x1, y1, color)
-            while (x1, y1) != (x2, y2):
-                x1 += dx
-                y1 += dy
-                self.draw_pixel(x1, y1, color)
-        else:
-            raise NotImplementedError
+
+        dx = x2 - x1
+        dy = y2 - y1
+        increment_x = sign(dx)
+        increment_y = sign(dy)
+        if dx < 0:
+            dx *= -1
+        if dy < 0:
+            dy *= -1
+
+        par_dx = increment_x if dx > dy else 0
+        par_dy = increment_y if not (dx > dy) else 0
+
+        delta_slow = dy if dx > dy else dx
+        delta_fast = dx if dx > dy else dy
+
+        x = x1
+        y = y1
+        err = delta_fast // 2
+        self.draw_pixel(x, y, color)
+
+        for i in range(delta_fast):
+            err -= delta_slow
+            if err < 0:
+                # diagonal step
+                err += delta_fast
+                x += increment_x
+                y += increment_y
+            else:
+                x += par_dx
+                y += par_dy
+            self.draw_pixel(x, y, color)
+
         if blit:
             self.blit()
 
