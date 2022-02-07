@@ -1,4 +1,7 @@
+from copy import deepcopy
+
 import usb.core
+import usb.legacy
 
 from image import Image
 
@@ -12,10 +15,66 @@ class VocoreScreen:
         self.device: usb.core.Device = usb.core.find(idVendor=VENDOR, idProduct=PRODUCT)
         if self.device is None:
             raise Exception("Vocore screen not found :<")
+        self.legacy_device_handle = usb.legacy.Device(self.device).open()
         # wakeup screen
         self._wakeup()
         self.buffer = Image()
         self.clear(blit=True)
+
+    def get_last_touch_event(self):
+        """
+        Try to get touch event, will return None if no event is detected
+        """
+        try:
+            r = self.legacy_device_handle.interruptRead(0x81, 128)
+            # TODO: Parse this :D
+            """ (all unsigned chars)
+            char unused
+            char unused
+            char count
+            ----------
+            point (2x):
+                union axis xh:
+                    struct hx (8bit)
+                        char h (4bit)
+                        char u (2bit)
+                        char f (2bit)
+                    struct hy (8bit)
+                        char h (4bit)
+                        char id (4bit)
+                    char c (8bit)
+                char x1 (8bit)
+                union axis yh 
+                    hx (8 bit)
+                    hy (8 bit)
+                    c (8 bit)
+                char y1 8bit
+                char weight 8bit
+                char misc 8bit
+            """
+            """
+            Getting coord of a single point:
+            X-Cord:
+            point[0].xh.hx.h  <--- Upper 8 bit
+            point[0].x1   <--- Lower 8 bit
+            
+            x = (point[0].xh.hx.h << 8)  + point[0].x1
+
+            Y-Cord:
+            (point[0].yh.hy.h << 8) + point[0].y1            
+            """
+            return r
+        except:
+            return None
+
+    def _debug_touch_loop(self):
+        last = None
+        while True:
+            event = self.get_last_touch_event()
+            if event is not None and event != last:
+                print(event)
+                print(bin(int.from_bytes(event.tobytes(), "little")))
+                last = deepcopy(event)
 
     def set_brightness(self, brightness: int):
         """
