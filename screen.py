@@ -137,6 +137,28 @@ class VocoreScreen:
         cmd = [0x00, 0x2C, 0x00, 0xB8, 0x0B, 0x00]
         self.device.ctrl_transfer(0x40, 0xB0, 0, 0, cmd, 100)
 
+    def _get_version(self):
+        # WIP
+        cmd = [0x51, 0x02, 0x04, 0x1F, 0xFC]
+        self.device.ctrl_transfer(0x40, 0xB5, 0, 0, cmd)
+        ret = self.device.ctrl_transfer(0xC0, 0xB6, 0, 0, cmd)
+        print(ret)
+        ret = self.device.ctrl_transfer(0xC0, 0xB7, 0, 0, cmd)
+        print(ret)
+        return ret
+
+    def _get_uid(self):
+        # WIP
+        cmd = [0x51, 0x02, 0x08, 0x1F, 0xF0]
+        buf = [0 for i in range(9)]
+        self.device.ctrl_transfer(0x40, 0xB5, 0, 0, cmd)
+        ret = self.device.ctrl_transfer(0xC0, 0xB6, 0, 0, cmd)
+        print(ret)
+        x = self.device.ctrl_transfer(0xC0, 0xB7, 0, 0, buf)
+        return "{:02x}{:02x}-{:02x}{:02x}-{:02x}{:02x}{:02x}{:02x}\n".format(
+            x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7]
+        )
+
     def _wakeup(self):
         """
         Wakeup screen (This is needed for the screen to work)
