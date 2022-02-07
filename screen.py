@@ -82,14 +82,20 @@ class VocoreScreen:
         if blit:
             self.blit()
 
-    def draw_rect(self, x1, y1, x2, y2, color, blit=False):
+    def draw_rect(self, x1, y1, x2, y2, color, fill=False, blit=False):
         """
         Draws rectangle from x1,y1 to x2,y2
         """
-        self.draw_line(x1, y1, x1, y2, color)
-        self.draw_line(x1, y1, x2, y1, color)
-        self.draw_line(x2, y1, x2, y2, color)
-        self.draw_line(x1, y2, x2, y2, color)
+        if fill:
+            for x in range(x1, x2):
+                for y in range(y1, y2):
+                    self.draw_pixel(x, y, color)
+        else:
+            self.draw_line(x1, y1, x1, y2, color)
+            self.draw_line(x1, y1, x2, y1, color)
+            self.draw_line(x2, y1, x2, y2, color)
+            self.draw_line(x1, y2, x2, y2, color)
+
         if blit:
             self.blit()
 
