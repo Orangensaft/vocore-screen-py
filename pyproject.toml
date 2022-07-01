@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vocore_screen"
-version = "0.0.1"
+version = "0.0.1b"
 authors = [
   { name="Nicolas Meisberger", email="vocore-screen@bitshift.wtf" },
 ]
