@@ -2,7 +2,7 @@ from .font import FONT_5x7
 
 from .screen import VocoreScreen
 
-if __name__ == "__main__":
+def run():
     d = VocoreScreen()
     d.set_brightness(255)
     d.draw_string(45, 430, "".join([str(c) for c in FONT_5x7 if c != -1]), "#00FF00")
@@ -15,3 +15,7 @@ if __name__ == "__main__":
     d.draw_line(0, 480 - 1, 800 - 1, 0, "#FFFFFF")
     d.draw_rect(600, 150, 700, 300, "#00FF00", fill=True)
     d.blit()  # Update screen
+
+
+if __name__ == "__main__":
+    run()
