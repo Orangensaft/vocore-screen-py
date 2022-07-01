@@ -3,7 +3,7 @@ from copy import deepcopy
 import usb.core
 import usb.legacy
 
-from image import Image
+from src.vocore_screen.image import Image
 
 VENDOR = 0xC872
 PRODUCT = 0x1004
