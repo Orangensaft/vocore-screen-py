@@ -10,6 +10,8 @@ pyusb = "*"
 black = "*"
 ipython = "*"
 colorama = "*"
+build = "*"
+twine = "*"
 
 [requires]
 python_version = "3.10"
