@@ -1,6 +1,6 @@
-from font import FONT_5x7
+from .font import FONT_5x7
 
-from screen import VocoreScreen
+from .screen import VocoreScreen
 
 if __name__ == "__main__":
     d = VocoreScreen()

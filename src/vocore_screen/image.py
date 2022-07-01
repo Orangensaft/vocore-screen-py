@@ -1,4 +1,4 @@
-from font import FONT_5x7
+from .font import FONT_5x7
 
 HEIGHT = 480
 WIDTH = 800
