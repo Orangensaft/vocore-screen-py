@@ -40,10 +40,16 @@ class Image:
                 if bits[bit_pos] == "1":
                     self.set_pixel(x + offset_x, y + offset_y, color)
 
-    def draw_string(self, x, y, s: str, color, size=1):
+    def draw_string(self, x, y, s: str, color, size=1, cut_off=True):
         offset = 0
         for i in s:
-            self.draw_char(x + offset, y, i, color, size)
+            try:
+                self.draw_char(x + offset, y, i, color, size)
+            except IndexError as ex:
+                if cut_off:
+                    return
+                else:
+                    raise ex
             offset += 6 * size
 
     @staticmethod

@@ -104,6 +104,9 @@ class VocoreScreen:
             self.blit()
 
     def draw_line(self, x1, y1, x2, y2, color, blit=False):
+        """
+        Draws a line between (x1,y1) and (x2,y2)
+        """
         sign = lambda x: -1 if x < 0 else 1 if x > 0 else 0
 
         dx = x2 - x1
@@ -158,12 +161,13 @@ class VocoreScreen:
         if blit:
             self.blit()
 
-    def draw_string(self, x, y, s: str, color, blit=False, size=2):
+    def draw_string(self, x, y, s: str, color, blit=False, size=2, cut_off=True):
         """
         Draws text on given position, where x and y are the lower left corner.
-        As a 5x7 font is used use size as scaling factor
+        As a 5x7 font is used use size as scaling factor.
+        When cut_off is set to false an IndexError will be raised if attempting to write out of bounds.
         """
-        self.buffer.draw_string(x, y, s, color, size)
+        self.buffer.draw_string(x, y, s, color, size, cut_off)
         if blit:
             self.blit()
 
